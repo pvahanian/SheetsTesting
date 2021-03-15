@@ -1,5 +1,6 @@
 .form{
-    width: 500px;
+    display: flex;
+    width: 80vw;
   }
   
   .container{
