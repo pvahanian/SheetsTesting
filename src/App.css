@@ -6,3 +6,8 @@
   .container{
     padding:20px
   }
+ #border{
+    border:2px solid black;
+    width: fit-content;
+    padding:10px;
+  }

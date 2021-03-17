@@ -1,0 +1,180 @@
+// import React, { Component, FormEvent, useEffect, useState } from "react";
+// import "./App.css";
+// import { Button, Form, Container, Header } from 'semantic-ui-react'
+// import NavBars from './NavBars'
+// import axios from "axios";
+
+// // import Login from "./pages/Login"
+
+
+// interface ClientData {
+//   month: string;
+//   client: string,
+//   id: number,
+//   balance: number,
+//   deposit: number,
+//   withdrawl: number,
+//   gainLoss: number,
+//   endingBalance:number
+// }
+
+// function App() {
+//   const [clientInput, setClientInput] = useState<string>('')
+//   const [serverData, setServerData] = useState([])
+//   const [clients, setClients] = useState<ClientData>({
+//     month: "",
+//     client: "",
+//     id: 0,
+//     balance: 0,
+//     deposit: 0,
+//     withdrawl: 0,
+//     gainLoss: 0,
+//     endingBalance:0
+//   })
+
+//   useEffect(()=>{
+//     let persons:any
+//     const testHlder = { "Balance": "200",
+//     "Client": "Newtest",
+//     "Deposit": "200",
+//     "EndingBalance": "200",
+//     "GainOrLoss": "0",
+//     "ID": "4",
+//     "Month": "March",
+//     "Withdrawl": "0",
+//   }
+//     axios.get(`https://sheet.best/api/sheets/619d222f-7a12-41e1-ac03-3a701302e6e1`)
+//       .then(res => {
+//         persons = res.data;
+//         console.log(persons)
+//          // setServerData(res.data)
+//       })
+//     axios.post('https://sheet.best/api/sheets/619d222f-7a12-41e1-ac03-3a701302e6e1',"JSON.stringify(testHlder)")
+//     .then((response) => {
+//       console.log("Post Response",response.data, "Person Data", persons);
+//     }, (error) => {
+//       console.log(error);
+//     });
+//   },[])
+
+//   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     console.log(e.target.name, e.target.value)
+//     setClientInput(e.target.value)
+//   };
+
+//   const handleSubmit = (e: FormEvent) => {
+//     e.preventDefault();    
+//     setClients(prevClient => {
+//     return {
+//       ...prevClient,
+//     }
+// })
+// }
+
+
+//   return (
+//     <div className="App">
+//       {/* <NavBars />
+//       <Container fluid className="container">
+//         <Header as='h2'>React Google Sheets!</Header>
+//         <Form className="form" onSubmit={handleSubmit}>
+//           <Form.Field>
+//             <label>Name</label>
+//             <input placeholder='Enter your name' type="text" name="clientName" value={clients.name} onChange={changeHandler} />
+//           </Form.Field>
+//           <Form.Field>
+//             <label>Age</label>
+//             <input placeholder='Enter your age' type="number" name="age" value={clients.age} onChange={changeHandler} />
+//           </Form.Field>
+//           <Form.Field>
+//             <label>Salary</label>
+//             <input placeholder='Enter your salary' type="number" name="salary" value={clients.salary} onChange={changeHandler} />
+//           </Form.Field>
+//           <Form.Field>
+//             <label>Hobby</label>
+//             <input placeholder='Enter your hobby' type="text" name="hobby" value={clients.hobby} onChange={changeHandler} />
+//           </Form.Field>
+
+//           <Button color="blue" type='submit'>Submit</Button>
+//         </Form>
+//       </Container> */}
+
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+// // `https://sheet.best/api/sheets/619d222f-7a12-41e1-ac03-3a701302e6e1`
+
+
+    // const data = {
+    //     Month: "March",
+    //     Client: "Jack Doe",
+    //     Id: 2,
+    //     StartingBalance:1000,
+    //     SureFireFee: 30,
+    //     NewNetBalance: 1070,
+    //     PercentageGain: .07,
+    //     Withdrawal: "0",
+    //     Deposit: "0",
+    //     NextMonthValue: "$1070",
+    //   };
+
+
+    {/* 
+    <Container fluid className="container">
+      <Header as="h3">Update Portfolio</Header>
+      <Form className="form">
+        <Form.Field>
+          <label>Starting Portfolio Value</label>
+          <input
+            placeholder="Starting Value"
+            onChange={(e) => setClientName(e.target.value)}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>Ending Monthly Value</label>
+          <input
+            placeholder="Ending Portfolio Value"
+            onChange={(e) => setStartingBalance(e.target.value)}
+          />
+        </Form.Field>
+        <Button color="blue" type="button" onClick={handleSubmitPortfolioValue}>
+          Update Portfolio Value
+        </Button>
+      </Form> 
+    </Container> */}
+
+    
+    // fetch(
+      
+    //   {
+    //     method: "POST",
+    //     mode: "cors",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    //   }
+    // )
+    //   .then((r) => r.json())
+    //   .then((data) => {
+    //     // The response comes here
+    //     console.log(data);
+    //     let clear = document.querySelectorAll("portInput")
+    //     console.log(clear.input, "clear.input")
+    //     console.log(clear, "full clear = ")
+    //     clear.target.value =""
+    //   })
+    //   .catch((error) => {
+    //     // Errors are reported there
+    //     console.log(error);
+    //   }); 
+//Patch data example
+       "data": 
+        {"NewNetBalance": 100,
+        "SureFireFee":30,
+        "PercentageGain":0.12,
+        "NextMonthValue":100}

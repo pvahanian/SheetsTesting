@@ -1,89 +1,76 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Container, Header } from "semantic-ui-react";
-import DashBoard from "./component/Dashboard"
-import axios from "axios";
 import "./App.css";
+
+import axios from "axios";
+import { Button, Form, Container, Header } from "semantic-ui-react";
+
+import DashBoard from "./component/Dashboard"
+import PortfolioEditor from "./component/PortfolioEditor";
+
 
 function App() {
   const [clientName, setClientName] = useState("");
   const [startingBalance, setStartingBalance] = useState("");
-  const [clientData, setClientData] = useState([]);
+  const [sheetsData, setSheetsData] = useState([]);
+  const [portfolioValue, setPortfolioValue] = useState([]);
 
+  //Creates the Data to go into the Month in a Month Year format.
   const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
   const dateHolder = new Date()
-  const currentMonth = monthNames[dateHolder.getMonth()]
+  const currentMonth = monthNames[dateHolder.getMonth()] +" "+ dateHolder.getFullYear()
 
   useEffect(() => {
-    // axios
-    // .get(
-    //     'https://sheet.best/api/sheets/619d222f-7a12-41e1-ac03-3a701302e6e1',
-    // )
-    // .then((response) => {
-    //     console.log(response);
-    //     setClientData(response.data)
-    // });
+    const getData =() =>{
+    axios.get('https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/March2021')
+    .then((response)=>{
+      setSheetsData(response.data)
+    })
+  }
+  getData()
   }, []);
 
-  const handleSubmit = (e) => {
+  // console.log(sheetsData,"should be sheetsdata")
+
+  const handleSubmitNewClient = (e) => {
     e.preventDefault();
 
-    // const data = {
-    //     Month: "March",
-    //     Client: "Jack Doe",
-    //     Id: 2,
-    //     StartingBalance:1000,
-    //     SureFireFee: 30,
-    //     NewNetBalance: 1070,
-    //     PercentageGain: .07,
-    //     Withdrawal: "0",
-    //     Deposit: "0",
-    //     NextMonthValue: "$1070",
-    //   };
-
-    const data = {
+    const dataSend = {
       Month: currentMonth,
       clientName,
       startingBalance,
+      "Id":Math.floor(Math.random() * 10000) + 2 
     };
 
-    // Add one line to the sheet
-    fetch(
-      "https://sheet.best/api/sheets/619d222f-7a12-41e1-ac03-3a701302e6e1",
-      {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
+    axios.post("https://sheetdb.io/api/v1/gukfsbnzqayil",{"data": dataSend}
     )
-      .then((r) => r.json())
-      .then((data) => {
+     .then((data) => {
         // The response comes here
-        console.log(data);
+        // console.log(data,"this is data");
         Array.from(document.querySelectorAll("input")).forEach(
             input => (input.value = "")
           );
-        // setClientName("")
-        // setStartingBalance("")
+          setStartingBalance("")
+          setPortfolioValue("")
       })
       .catch((error) => {
         // Errors are reported there
         console.log(error);
       });
-
   };
+  
+  
 
   return (
     <div>
-    <DashBoard clientData={clientData}/>
+    <DashBoard sheetsData={sheetsData}/>
+    <PortfolioEditor sheetsData={sheetsData}/>
+
     <Container fluid className="container">
-      <Header as="h3">Add New Client</Header>
+      <Header as="h3">Add New Client after Portfolio is balanced</Header>
       <Form className="form">
         <Form.Field>
-          <label>Client Name</label>
+          <label>New Client Name</label>
           <input
             placeholder="Client Name"
             onChange={(e) => setClientName(e.target.value)}
@@ -96,34 +83,14 @@ function App() {
             onChange={(e) => setStartingBalance(e.target.value)}
           />
         </Form.Field>
-        <Button color="blue" type="button" onClick={handleSubmit}>
+        <Button color="blue" type="button" onClick={handleSubmitNewClient}>
           Add New Client
         </Button>
       </Form>
     </Container>
 
-    <Container fluid className="container">
-      <Header as="h3">Update Portfolio</Header>
-      <Form className="form">
-        <Form.Field>
-          <label>Starting Portfolio Value</label>
-          <input
-            placeholder="Starting Value"
-            onChange={(e) => setClientName(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Ending Monthly Value</label>
-          <input
-            placeholder="Ending Portfolio Value"
-            onChange={(e) => setStartingBalance(e.target.value)}
-          />
-        </Form.Field>
-        <Button color="blue" type="button" >
-          Update Portfolio Value
-        </Button>
-      </Form>
-    </Container>
+    
+
     </div>
   );
 }
