@@ -11,3 +11,8 @@
     width: fit-content;
     padding:10px;
   }
+#movestuff{
+  display: flex;
+  width: 78vw;
+  justify-content: flex-end;
+}

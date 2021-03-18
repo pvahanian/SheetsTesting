@@ -178,3 +178,22 @@
         "SureFireFee":30,
         "PercentageGain":0.12,
         "NextMonthValue":100}
+
+          //Harry's Cut without fee
+        // if(Number(clients[i].Id)===1){
+        //   const hStartingBalance = Number(clients[i].startingBalance)
+        //   let harrysCut=(hStartingBalance/startingValue)*totalProfit
+        //   let percentGained= harrysCut/hStartingBalance
+        //   harrysCut+=hStartingBalance
+        //   axios.patch("https://sheetdb.io/api/v1/gukfsbnzqayil/Id/1",{"data":{"NewNetBalance":harrysCut,"PercentageGain":percentGained}}).then( response => {});
+        // }
+        // //Calculate Surefires Portion
+        // if(Number(clients[i].Id)===0){
+        //   const StartingBalance = Number(clients[i].startingBalance)
+        //   let sureFirePort=(StartingBalance/startingValue)*totalProfit
+        //   let percentGained= sureFirePort/StartingBalance
+        //   sureFirePort+=StartingBalance
+        //   axios.patch("https://sheetdb.io/api/v1/gukfsbnzqayil/Id/0",{"data":{"NewNetBalance":sureFirePort,"PercentageGain":percentGained}}).then( response => {
+        //   });
+        // }
+        onClick={(e)=> {teachDomStuff(e,client.Id)}}>{client.Withdrawal}
