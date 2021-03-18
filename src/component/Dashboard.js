@@ -1,23 +1,44 @@
 import React, { useState } from "react";
 import useTableInput from './hooks/useTableInput'
-import { Table,Button } from "semantic-ui-react";
+import { Table,Button,Dropdown } from "semantic-ui-react";
 
 const Dashboard = (sheetsData) => {
+
+  const DropdownExampleDropdown = () => (
+    <Dropdown text='Month'>
+      <Dropdown.Menu>
+        <Dropdown.Item text='January'/>
+        <Dropdown.Item text="February"/>
+        <Dropdown.Item text='March'/>
+        <Dropdown.Item text='April'/>
+        <Dropdown.Item text='May'/>
+        <Dropdown.Item text='June'/>
+        <Dropdown.Item text='July' />
+        <Dropdown.Item text='August'/>
+        <Dropdown.Item text='September'/>
+        <Dropdown.Item text='October'/>
+        <Dropdown.Item text='November'/>
+        <Dropdown.Item text='December'/>
+      </Dropdown.Menu>
+    </Dropdown>
+)
+
 
   return (
     <>
     <Table striped>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Month</Table.HeaderCell>
-          <Table.HeaderCell>Client Name</Table.HeaderCell>
-          <Table.HeaderCell>Starting Monthly Balance</Table.HeaderCell>
-          <Table.HeaderCell>Sure Fire Fee</Table.HeaderCell>
-          <Table.HeaderCell>New Net Balance</Table.HeaderCell>
-          <Table.HeaderCell>Percentage Gain</Table.HeaderCell>
-          <Table.HeaderCell>Withdrawal</Table.HeaderCell>
-          <Table.HeaderCell>Deposit</Table.HeaderCell>
-          <Table.HeaderCell>Next Months Balance</Table.HeaderCell>
+          <DropdownExampleDropdown />
+          {/* <Table.HeaderCell><h3>Month</h3></Table.HeaderCell> */}
+          <Table.HeaderCell><h3>Client Name</h3></Table.HeaderCell>
+          <Table.HeaderCell><h3>Starting Monthly Balance</h3></Table.HeaderCell>
+          <Table.HeaderCell><h3>Sure Fire Fee</h3></Table.HeaderCell>
+          <Table.HeaderCell><h3>New Net Balance</h3></Table.HeaderCell>
+          <Table.HeaderCell><h3>Percentage Gain</h3></Table.HeaderCell>
+          <Table.HeaderCell><h3>Withdrawal</h3></Table.HeaderCell>
+          <Table.HeaderCell><h3>Deposit</h3></Table.HeaderCell>
+          <Table.HeaderCell><h3>Next Months Balance</h3></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
@@ -48,10 +69,10 @@ function BuddysWorld ({client}) {
     <React.Fragment key={client.Id}>
       <Table.Row className={client.Id}>
         <Table.Cell>{client.Month}</Table.Cell>
-        <Table.Cell>{client.clientName}</Table.Cell>
-        <Table.Cell>{client.startingBalance} </Table.Cell>
+        <Table.Cell><h4>{client.clientName}</h4></Table.Cell>
+        <Table.Cell>$ {Number(client.startingBalance).toFixed(2)} </Table.Cell>
         <Table.Cell>{client.SureFireFee} </Table.Cell>
-        <Table.Cell>{client.NewNetBalance} </Table.Cell>
+        <Table.Cell>$ {Number(client.NewNetBalance).toFixed(2)} </Table.Cell>
         <Table.Cell>{client.PercentageGain} </Table.Cell>
         <Table.Cell>
           {withdrawalEditing ? (
