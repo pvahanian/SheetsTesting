@@ -1,27 +1,26 @@
 import React from "react";
-import useTableInput from "./hooks/useTableInput";
+import useTableInput from "./hooks/useTableInput"
+
+import {monthsDropdownData, defaultDropDownMonth} from '../consts/constants'
+
 import { Table, Button, Dropdown, Header } from "semantic-ui-react";
+
 
 const Dashboard = (sheetsData) => {
   
-  // Make dynamic with Sheet tabs.
+  const handleDropdown = (event, data) => {
+    console.log(data);
+    console.log(event, "this is the event")
+  };
+
   const DropdownExampleDropdown = () => (
-    <Dropdown text="Month">
-      <Dropdown.Menu> 
-        <Dropdown.Item text="January" />
-        <Dropdown.Item text="February" />
-        <Dropdown.Item text="March" />
-        <Dropdown.Item text="April" />
-        <Dropdown.Item text="May" />
-        <Dropdown.Item text="June" />
-        <Dropdown.Item text="July" />
-        <Dropdown.Item text="August" />
-        <Dropdown.Item text="September" />
-        <Dropdown.Item text="October" />
-        <Dropdown.Item text="November" />
-        <Dropdown.Item text="December" />
-      </Dropdown.Menu>
-    </Dropdown>
+    <Dropdown
+    fluid
+    selection
+    options={monthsDropdownData}
+    onChange={handleDropdown}
+    defaultValue={defaultDropDownMonth.value}
+  />
   );
 
   return (
