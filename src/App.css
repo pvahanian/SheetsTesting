@@ -10,9 +10,18 @@
     border:2px solid black;
     width: fit-content;
     padding:10px;
-  }
-#movestuff{
+} #endingborder{
+    border:2px solid rgb(17, 200, 78);
+    width: fit-content;
+    padding:10px;
+}
+
+#submitChangesButtonDiv{
   display: flex;
-  width: 78vw;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 80vw;
+}
+.submitbutton{
+  width: fit-content;
 }

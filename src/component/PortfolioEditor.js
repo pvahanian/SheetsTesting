@@ -55,10 +55,10 @@ const PortfolioEditor = (props) => {
       <div>
         <Container fluid>
           <Header id="border" as="h3">
-            Starting Portfolio Value for the Month: ${startingValue}
+            Starting Portfolio Value for the Month: £{startingValue}
           </Header>
           <Header id="border" as="h3">
-            Ending Portfolio Value for the Month: $UPDATED VALUE HERE
+            Gross Ending Portfolio Value for the Month: £{endingBalance}
           </Header>
         </Container>
         <Container fluid className="container">
