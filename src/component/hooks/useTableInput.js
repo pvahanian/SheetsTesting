@@ -7,6 +7,7 @@ function useTableInput() {
   const onClickHandler = (e) => {
     e.preventDefault();
     setEditing(!editing);
+    console.log(value,e.target.name)
   };
 
   return [editing,value,setValue,onClickHandler]

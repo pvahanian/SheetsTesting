@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import useTableInput from "./hooks/useTableInput"
 
 import {monthsDropdownData, defaultDropDownMonth} from '../consts/constants'
@@ -13,7 +13,7 @@ const Dashboard = (sheetsData) => {
     // console.log(event, "this is the event")
   };
 
-  const handleSumbitValues = (event) =>{
+  const handleSubmitValues = (event) =>{
     console.log(event)
   }
   
@@ -73,7 +73,7 @@ const Dashboard = (sheetsData) => {
         </Table.Body>
       </Table>
       <div id="submitChangesButtonDiv">
-        <Button color="blue" className="submitbutton" onClick={(e)=>{handleSumbitValues(e)}}>Submit Changes</Button>
+        <Button color="blue" className="submitbutton" onClick={(e)=>{handleSubmitValues(e)}}>Submit Changes</Button>
         <Header id="endingborder" as="h3">
           Net Ending Portfolio Value for the Month: 
         </Header>
@@ -83,9 +83,12 @@ const Dashboard = (sheetsData) => {
 };
 
 function BuddysWorld({ client }) {
+
   const [withdrawalEditing,newWithdrawal,setNewWithdrawal,withDrawlHandler,] = useTableInput();
   const [depositEditing,newDeposit,setNewDeposit,depositHandler,] = useTableInput();
+  const [domsKitchen,setDomsKitchen] = useState()
 
+  
   return (
     <React.Fragment key={client.Id}>
       <Table.Row className={client.Id}>
@@ -102,6 +105,7 @@ function BuddysWorld({ client }) {
             <input
               className="withdrawalinput"
               onChange={(e) => setNewWithdrawal(e.target.value)}
+              name={client.Id}
               value={newWithdrawal}
               type="number"
             />
@@ -127,7 +131,7 @@ function BuddysWorld({ client }) {
             {depositEditing ? "Confirm" : "Edit"}
           </button>
         </Table.Cell>
-        <Table.Cell>{client.NextMonthValue} </Table.Cell>
+        <Table.Cell>£ ({Number(client.NewNetBalance).toFixed(2) - Number(newWithdrawal) + Number(newDeposit)})</Table.Cell>
       </Table.Row>
     </React.Fragment>
   );
