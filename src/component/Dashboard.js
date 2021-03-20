@@ -15,25 +15,27 @@ const Dashboard = (sheetsData) => {
   };
 
   const handleSubmitValues = (event) => {
-
+  const timeStamp = new Date(Date.now()).toDateString()
   let wholeTable = document.getElementsByClassName("testforDommy")
 
     for(let i = 1; i< wholeTable[0].rows.length; i++){
       let row = wholeTable[0].rows[i]
      
-      let withDrawlSubmit = Number(row.children[6].innerText.split(" ")[0])
+      let withDrawalHolder = Number(row.children[6].innerText.split(" ")[0])
       let depositHolder   = Number(row.children[7].innerText.split(" ")[0])
       let finalClientValue= Number(row.children[8].innerText.split(" ")[1])
       let clientIDHolder  = Number(row.className)
+      
 
-      console.log("Values", withDrawlSubmit,depositHolder,finalClientValue,clientIDHolder)
+     
+      // console.log("Values", withDrawlSubmit,depositHolder,finalClientValue,clientIDHolder)
 
-      // requestArray.push(
-      //       axios.patch(
-      //         `https://sheetdb.io/api/v1/gukfsbnzqayil/Id/${clients[i].Id}`,
-      //         { data: { NewNetBalance: clientsCut, PercentageGain: percentGained } }
-      //       )
-      //     );
+      requestArray.push(
+            axios.patch(
+              `https://sheetdb.io/api/v1/gukfsbnzqayil/Id/${clientIDHolder}`,
+              { data: { Withdrawal: withDrawalHolder, Deposit: depositHolder,TimeStamp:timeStamp, NextMonthValue:finalClientValue}}
+            )
+          );
         
         
     }
