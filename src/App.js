@@ -7,28 +7,13 @@ import DashBoard from "./component/Dashboard";
 import PortfolioEditor from "./component/PortfolioEditor";
 import AddClient from "./component/AddClient";
 
+import {currentMonth} from './consts/constants'
+
+
 function App() {
   const [sheetsData, setSheetsData] = useState([]);
 
-  //Creates the Data to go into the Month in a Month Year format.
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const dateHolder = new Date();
-  const currentMonth =  monthNames[dateHolder.getMonth()] + dateHolder.getFullYear();
-
-  useEffect(() => {
+   useEffect(() => {
     const getData = () => {
       axios
         .get(

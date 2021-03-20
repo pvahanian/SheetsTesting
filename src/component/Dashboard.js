@@ -9,10 +9,14 @@ import { Table, Button, Dropdown, Header } from "semantic-ui-react";
 const Dashboard = (sheetsData) => {
   
   const handleDropdown = (event, data) => {
-    console.log(data);
-    console.log(event, "this is the event")
+    // console.log(data);
+    // console.log(event, "this is the event")
   };
 
+  const handleSumbitValues = (event) =>{
+    console.log(event)
+  }
+  
   const DropdownExampleDropdown = () => (
     <Dropdown
     fluid
@@ -69,9 +73,9 @@ const Dashboard = (sheetsData) => {
         </Table.Body>
       </Table>
       <div id="submitChangesButtonDiv">
-        <Button color="blue" className="submitbutton">Submit Changes</Button>
+        <Button color="blue" className="submitbutton" onClick={(e)=>{handleSumbitValues(e)}}>Submit Changes</Button>
         <Header id="endingborder" as="h3">
-          Net Ending Portfolio Value for the Month: Numbers go here
+          Net Ending Portfolio Value for the Month: 
         </Header>
       </div>
     </>
@@ -79,19 +83,8 @@ const Dashboard = (sheetsData) => {
 };
 
 function BuddysWorld({ client }) {
-  const [
-    withdrawalEditing,
-    newWithdrawal,
-    setNewWithdrawal,
-    withDrawlHandler,
-  ] = useTableInput();
-
-  const [
-    depositEditing,
-    newDeposit,
-    setNewDeposit,
-    depositHandler,
-  ] = useTableInput();
+  const [withdrawalEditing,newWithdrawal,setNewWithdrawal,withDrawlHandler,] = useTableInput();
+  const [depositEditing,newDeposit,setNewDeposit,depositHandler,] = useTableInput();
 
   return (
     <React.Fragment key={client.Id}>
@@ -107,6 +100,7 @@ function BuddysWorld({ client }) {
         <Table.Cell>
           {withdrawalEditing ? (
             <input
+              className="withdrawalinput"
               onChange={(e) => setNewWithdrawal(e.target.value)}
               value={newWithdrawal}
               type="number"
@@ -114,13 +108,14 @@ function BuddysWorld({ client }) {
           ) : (
             Number(newWithdrawal) + Number(client.Withdrawal) + " "
           )}
-          <button class="positive ui button" onClick={withDrawlHandler}>
+          <button className="positive ui button" onClick={withDrawlHandler}>
             {withdrawalEditing ? "Confirm" : "Edit"}
           </button>
         </Table.Cell>
         <Table.Cell>
           {depositEditing ? (
             <input
+              className="depositinput"
               onChange={(e) => setNewDeposit(e.target.value)}
               value={newDeposit}
               type="number"

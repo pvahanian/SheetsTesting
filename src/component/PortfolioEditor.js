@@ -7,10 +7,12 @@ const PortfolioEditor = (props) => {
   const { sheetsData, setSheetsData } = props;
   const [endingBalance, setEndingBalance] = useState("");
   let [startingValue] = useState(0);
+  let [isLoading, setIsLoading] = useState(false)
 
   startingValue = calculateStartingValue(sheetsData);
 
   const handleSubmitPortfolioValue = (e) => {
+    setIsLoading(true)
     const data = {
       PorfolioEndingBalance: endingBalance,
     };
@@ -48,6 +50,8 @@ const PortfolioEditor = (props) => {
             console.log('this fired', response.data)
             setSheetsData(response.data)
         })
+        setIsLoading(false)
+
       })
     };
   }
@@ -65,20 +69,22 @@ const PortfolioEditor = (props) => {
           <Header as="h3">Update Portfolio</Header>
           <Form className="form">
             <Form.Field>
-              <label>Ending Monthly Value</label>
+              <label>Portfolio Ending Value</label>
               <input
                 className="portInput"
-                placeholder="Ending Portfolio Value"
+                placeholder="Portfolio Ending Value"
                 onChange={(e) => setEndingBalance(e.target.value)}
               />
             </Form.Field>
+            {!isLoading?
             <Button
               color="blue"
               type="button"
               onClick={handleSubmitPortfolioValue}
             >
               Update Portfolio Value
-            </Button>
+            </Button> :
+            <Button loading primary></Button> }
           </Form>
         </Container>
       </div>

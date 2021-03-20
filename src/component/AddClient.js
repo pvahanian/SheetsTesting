@@ -28,7 +28,7 @@ const AddClient = () => {
     e.preventDefault();
 
     let confirmValues = window.confirm(
-      `Please confirm values: ClientName ${clientName}, Starting Balance: ${startingBalance}, Fee ${SureFireFee}`
+      `Please confirm ClientName:${clientName}   Starting Balance:${startingBalance}    Fee:${SureFireFee}`
     );
 
     if (confirmValues) {

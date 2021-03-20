@@ -1,3 +1,5 @@
+
+//Creates the Data to go into the Month in a Month Year format.
 const monthNames = [
     "January",
     "February",
@@ -15,7 +17,7 @@ const monthNames = [
   export const dateHolder = new Date();
   export const currentMonth =  monthNames[dateHolder.getMonth()] + dateHolder.getFullYear();
   export let defaultDropDownMonth
-  
+
   export const monthsDropdownData = [
     { key: "January", text: "January", value: "January"+dateHolder.getFullYear()}, 
     { key: "February", text: "February", value: "February"+dateHolder.getFullYear()},
