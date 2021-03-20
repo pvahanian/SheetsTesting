@@ -1,35 +1,77 @@
-import React, {useState} from "react";
-import useTableInput from "./hooks/useTableInput"
+import React, { useState } from "react";
+import useTableInput from "./hooks/useTableInput";
+import axios from "axios";
 
-import {monthsDropdownData, defaultDropDownMonth} from '../consts/constants'
+import { monthsDropdownData, defaultDropDownMonth } from "../consts/constants";
 
 import { Table, Button, Dropdown, Header } from "semantic-ui-react";
 
-
 const Dashboard = (sheetsData) => {
-  
+  const [changesNeeded, setChangesNeeded] = useState([]); // Any changes that need to be patched to values for next month
+
   const handleDropdown = (event, data) => {
     // console.log(data);
     // console.log(event, "this is the event")
   };
 
-  const handleSubmitValues = (event) =>{
-    console.log(event)
+  const handleSubmitValues = (event) => {
+
+  let wholeTable = document.getElementsByClassName("testforDommy")
+
+    for(let i = 1; i< wholeTable[0].rows.length; i++){
+      let row = wholeTable[0].rows[i]
+     
+      let withDrawlSubmit = Number(row.children[6].innerText.split(" ")[0])
+      let depositHolder   = Number(row.children[7].innerText.split(" ")[0])
+      let finalClientValue= Number(row.children[8].innerText.split(" ")[1])
+      let clientIDHolder  = Number(row.className)
+
+      console.log("Values", withDrawlSubmit,depositHolder,finalClientValue,clientIDHolder)
+
+      // requestArray.push(
+      //       axios.patch(
+      //         `https://sheetdb.io/api/v1/gukfsbnzqayil/Id/${clients[i].Id}`,
+      //         { data: { NewNetBalance: clientsCut, PercentageGain: percentGained } }
+      //       )
+      //     );
+        
+        
+    }
+
+  //   requestArray.push(
+  //     axios.patch(
+  //       `https://sheetdb.io/api/v1/gukfsbnzqayil/Id/${clients[i].Id}`,
+  //       { data: { NewNetBalance: clientsCut, PercentageGain: percentGained } }
+  //     )
+  //   );
+  // };
+
+  // axios.all(requestArray).then(() => {
+  //   axios
+  //     .get(
+  //       `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/March2021`
+  //     )
+  //     .then((response) => {
+  //       console.log("this fired", response.data);
+  //       setSheetsData(response.data);
+  //     });
+  //   setIsLoading(false);
+  // 
   }
-  
+  //);
   const DropdownExampleDropdown = () => (
     <Dropdown
-    fluid
-    selection
-    options={monthsDropdownData}
-    onChange={handleDropdown}
-    defaultValue={defaultDropDownMonth.value}
-  />
+      fluid
+      selection
+      options={monthsDropdownData}
+      onChange={handleDropdown}
+      defaultValue={defaultDropDownMonth.value}
+    />
   );
 
   return (
     <>
-      <Table striped>
+      <Table striped className="testforDommy">
         <Table.Header>
           <Table.Row>
             <DropdownExampleDropdown />
@@ -73,9 +115,17 @@ const Dashboard = (sheetsData) => {
         </Table.Body>
       </Table>
       <div id="submitChangesButtonDiv">
-        <Button color="blue" className="submitbutton" onClick={(e)=>{handleSubmitValues(e)}}>Submit Changes</Button>
+        <Button
+          color="blue"
+          className="submitbutton"
+          onClick={(e) => {
+            handleSubmitValues(e);
+          }}
+        >
+          Submit Changes
+        </Button>
         <Header id="endingborder" as="h3">
-          Net Ending Portfolio Value for the Month: 
+          Net Ending Portfolio Value for the Month: { }
         </Header>
       </div>
     </>
@@ -83,12 +133,19 @@ const Dashboard = (sheetsData) => {
 };
 
 function BuddysWorld({ client }) {
+  const [
+    withdrawalEditing,
+    newWithdrawal,
+    setNewWithdrawal,
+    withDrawlHandler,
+  ] = useTableInput();
+  const [
+    depositEditing,
+    newDeposit,
+    setNewDeposit,
+    depositHandler,
+  ] = useTableInput();
 
-  const [withdrawalEditing,newWithdrawal,setNewWithdrawal,withDrawlHandler,] = useTableInput();
-  const [depositEditing,newDeposit,setNewDeposit,depositHandler,] = useTableInput();
-  const [domsKitchen,setDomsKitchen] = useState()
-
-  
   return (
     <React.Fragment key={client.Id}>
       <Table.Row className={client.Id}>
@@ -131,7 +188,12 @@ function BuddysWorld({ client }) {
             {depositEditing ? "Confirm" : "Edit"}
           </button>
         </Table.Cell>
-        <Table.Cell>£ ({Number(client.NewNetBalance).toFixed(2) - Number(newWithdrawal) + Number(newDeposit)})</Table.Cell>
+        <Table.Cell>
+          £ {Number(client.NewNetBalance).toFixed(2) -
+            Number(newWithdrawal) +
+            Number(newDeposit)}
+          
+        </Table.Cell>
       </Table.Row>
     </React.Fragment>
   );

@@ -95,7 +95,7 @@ const PortfolioEditor = (props) => {
   function calculateStartingValue (clients) {
     let portfolioSum = 0;
     if (clients.length === 0) {
-      console.log("bad Data");
+      // console.log("bad Data");
     } else {
       for (let i = 0; i < clients.length; i++) {
         portfolioSum += Number(clients[i].startingBalance);
