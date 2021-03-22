@@ -6,6 +6,7 @@ import {
   monthsDropdownData,
   defaultDropDownMonth,
   currentMonth,
+  nextMonth,
 } from "../consts/constants";
 
 import { Table, Button, Dropdown, Header } from "semantic-ui-react";
@@ -13,12 +14,12 @@ import { Table, Button, Dropdown, Header } from "semantic-ui-react";
 const Dashboard = (sheetsData) => {
   // let [isLoading, setIsLoading] = useState(false);
   const [nextMonthSheet, setNextMonthSheet] = useState([]);
-  const [endingMonthValue, setEndingMonthvalue] =useState(0)
+  const [endingMonthValue, setEndingMonthValue] =useState(0)
 
   const handleDropdown = (event, data) => {
   };
 
-  const handleSubmitValues = (event) => {
+  const handleSubmitValues = (event,getData) => {
     //Pull Data from Dom Once values are submitted NEEDS TO BE REFACTORED TO ANOTHER COMPONENT
           let portfolioSum =0;
           const timeStamp = new Date(Date.now()).toDateString();
@@ -32,8 +33,6 @@ const Dashboard = (sheetsData) => {
             let clientIDHolder = row.className;
 
             portfolioSum+=finalClientValue;
-           
-
             axios
               .put(
                 `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
@@ -49,18 +48,33 @@ const Dashboard = (sheetsData) => {
               )
               .then((response) => {
                 console.log("this fired", response.data);
-              });
+              })
           }
-    const getData = () => {
-    axios
-      .get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`)
-        .then((response) => {
-          setNextMonthSheet(response.data);
-        });
-    };
-    getData();   
-    setEndingMonthvalue(portfolioSum) 
-  };
+    getData()
+    setEndingMonthValue(portfolioSum)
+};
+
+function getData () {
+  let newSheetStuff = []
+  axios
+    .get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`)
+      .then((response) => {
+        // setNextMonthSheet(response.data);
+
+        for(let i= 0; i<response.data.length; i++){
+          let client = response.data[i]
+          newSheetStuff.push({
+            Month:nextMonth,
+            clientName:client.clientName,
+            Id:client.Id,
+            EnrollmentDate:client.EnrollmentDate,
+            startingBalance:client.NextMonthValue,
+            SureFireFee:client.SureFireFee,
+          })
+        }
+      });
+      console.log(newSheetStuff)
+};
 
   const DropdownExampleDropdown = () => (
     <Dropdown
@@ -122,7 +136,7 @@ const Dashboard = (sheetsData) => {
           color="blue"
           className="submitbutton"
           onClick={(e) => {
-            handleSubmitValues(e);
+            handleSubmitValues(e,getData);
           }}
         >
           Submit Changes

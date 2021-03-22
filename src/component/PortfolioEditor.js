@@ -18,12 +18,16 @@ const PortfolioEditor = (props) => {
 
   const handleSubmitPortfolioValue = (e) => {
     setIsLoading(true)
-    const data = {
-      PortfolioEndingBalance: endingBalance,
-    };
-    axios
-      .patch("https://sheetdb.io/api/v1/gukfsbnzqayil/Id/0", { data: data })
-      .then((response) => {});
+    axios.put(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
+      {
+        condition: { Id: "0" },
+        set: {
+          PortfolioEndingBalance: endingBalance,
+        }
+      })
+      .then((response) => {
+        console.log(response)
+      });
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -32,6 +36,7 @@ const PortfolioEditor = (props) => {
     function calculateNewValues() {
       buddyFunction();
     }
+   
 
     async function buddyFunction(){
       let totalProfit = endingBalance - startingValue;
@@ -48,10 +53,8 @@ const PortfolioEditor = (props) => {
 
         let percentGained = clientsCut / clientStartingValue;
         clientsCut += clientStartingValue;
-        console.log("Clients ID", clients[i].Id)
         requestArray.push(axios.put(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
         {condition: { Id: clients[i].Id},set:{"NewNetBalance":clientsCut,"PercentageGain":percentGained}}))  
-        console.log(sureFiresCut)
       }
       axios.all(requestArray).then(()=>{
         axios.get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}?search={"Id":"0"}`)
@@ -67,7 +70,6 @@ const PortfolioEditor = (props) => {
             .then(need =>{
               axios.get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`)
                 .then((response)=>{
-                  console.log('this fired', response.data)
                   setSheetsData(response.data)
                   setIsLoading(false)
                   }
