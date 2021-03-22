@@ -33,7 +33,7 @@ const PortfolioEditor = (props) => {
       buddyFunction();
     }
 
-    function buddyFunction(){
+    async function buddyFunction(){
       let totalProfit = endingBalance - startingValue;
       let clients = sheetsData;
       let requestArray = [];
@@ -49,8 +49,8 @@ const PortfolioEditor = (props) => {
         let percentGained = clientsCut / clientStartingValue;
         clientsCut += clientStartingValue;
         console.log("Clients ID", clients[i].Id)
-        requestArray.push(axios.patch(`https://sheetdb.io/api/v1/gukfsbnzqayil/Id/${clients[i].Id}`,
-        {"data":{"NewNetBalance":clientsCut,"PercentageGain":percentGained}}))
+        requestArray.push(axios.put(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
+        {condition: { Id: clients[i].Id},set:{"NewNetBalance":clientsCut,"PercentageGain":percentGained}}))  
         console.log(sureFiresCut)
       }
       axios.all(requestArray).then(()=>{
@@ -64,15 +64,19 @@ const PortfolioEditor = (props) => {
               },
             }
           )
-         })
-        // .then(
-        // axios.get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`)
-        //   .then((response)=>{
-        //     console.log('this fired', response.data)
-        //     setSheetsData(response.data)
-        // }))
+            .then(need =>{
+              axios.get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`)
+                .then((response)=>{
+                  console.log('this fired', response.data)
+                  setSheetsData(response.data)
+                  setIsLoading(false)
+                  }
+                )
+              }
+            )
+        })
       })
-    setIsLoading(false)
+
     };
  
     //
