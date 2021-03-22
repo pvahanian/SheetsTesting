@@ -16,9 +16,7 @@ function App() {
    useEffect(() => {
     const getData = () => {
       axios
-        .get(
-          `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`
-        )
+        .get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`)
         .then((response) => {
           setSheetsData(response.data);
         });

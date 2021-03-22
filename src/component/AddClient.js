@@ -51,6 +51,7 @@ const AddClient = () => {
         EnrollmentDate: new Date(forID).toDateString(),
       };
 
+      console.log(dataSend, "data were sending", "Next Month value ", nextMonth)
       axios
         .post(`https://sheetdb.io/api/v1/gukfsbnzqayil?sheet=${nextMonth}`, {
           data: dataSend,

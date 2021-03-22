@@ -14,7 +14,7 @@ const PortfolioEditor = (props) => {
   const handleSubmitPortfolioValue = (e) => {
     setIsLoading(true)
     const data = {
-      PorfolioEndingBalance: endingBalance,
+      PortfolioEndingBalance: endingBalance,
     };
     axios
       .patch("https://sheetdb.io/api/v1/gukfsbnzqayil/Id/0", { data: data })

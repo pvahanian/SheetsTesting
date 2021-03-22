@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import useTableInput from "./hooks/useTableInput";
 import axios from "axios";
 
-import { monthsDropdownData, defaultDropDownMonth } from "../consts/constants";
+import {
+  monthsDropdownData,
+  defaultDropDownMonth,
+  nextMonth,
+  dateHolder,
+  currentMonth,
+} from "../consts/constants";
 
 import { Table, Button, Dropdown, Header } from "semantic-ui-react";
 
 const Dashboard = (sheetsData) => {
-  const [changesNeeded, setChangesNeeded] = useState([]); // Any changes that need to be patched to values for next month
+  let [isLoading, setIsLoading] = useState(false);
 
   const handleDropdown = (event, data) => {
     // console.log(data);
@@ -15,52 +21,56 @@ const Dashboard = (sheetsData) => {
   };
 
   const handleSubmitValues = (event) => {
-  const timeStamp = new Date(Date.now()).toDateString()
-  let wholeTable = document.getElementsByClassName("testforDommy")
-
-    for(let i = 1; i< wholeTable[0].rows.length; i++){
-      let row = wholeTable[0].rows[i]
-     
-      let withDrawalHolder = Number(row.children[6].innerText.split(" ")[0])
-      let depositHolder   = Number(row.children[7].innerText.split(" ")[0])
-      let finalClientValue= Number(row.children[8].innerText.split(" ")[1])
-      let clientIDHolder  = Number(row.className)
-      
-
-     
-      // console.log("Values", withDrawlSubmit,depositHolder,finalClientValue,clientIDHolder)
-
-      requestArray.push(
-            axios.patch(
-              `https://sheetdb.io/api/v1/gukfsbnzqayil/Id/${clientIDHolder}`,
-              { data: { Withdrawal: withDrawalHolder, Deposit: depositHolder,TimeStamp:timeStamp, NextMonthValue:finalClientValue}}
-            )
-          );
-        
-        
+    //Pull Data from Dom Once values are submitted
+    const timeStamp = new Date(Date.now()).toDateString();
+    let wholeTable = document.getElementsByClassName("testforDommy");
+    // let requestArray = [];
+    console.log(nextMonth);
+    console.log(dateHolder);
+    console.log(dateHolder.getMonth());
+    for (let i = 1; i < wholeTable[0].rows.length; i++) {
+      let row = wholeTable[0].rows[i];
+      let withDrawalHolder = Number(row.children[6].innerText.split(" ")[0]);
+      let depositHolder = Number(row.children[7].innerText.split(" ")[0]);
+      let finalClientValue = Number(row.children[8].innerText.split(" ")[1]);
+      let clientIDHolder = row.className;
+      axios
+        .put(
+          `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
+          {
+            condition: { Id: clientIDHolder },
+            set: {
+              Withdrawal: withDrawalHolder,
+              Deposit: depositHolder,
+              TimeStamp: timeStamp,
+              NextMonthValue: finalClientValue,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("this fired", response.data);
+        });
     }
+  };
 
-  //   requestArray.push(
-  //     axios.patch(
-  //       `https://sheetdb.io/api/v1/gukfsbnzqayil/Id/${clients[i].Id}`,
-  //       { data: { NewNetBalance: clientsCut, PercentageGain: percentGained } }
-  //     )
-  //   );
-  // };
+  // }
+  // console.log(requestArray)
+  // axios.all(requestArray).then((response) => {
+  //         console.log("this fired", response.data);
+  //         setIsLoading(false);
+  // });
+  //   data: [
+  //     {
+  //         "query":"id=1",
+  //         "name":"qwes",
+  //         "age":20
+  //     },
+  //     {
+  //         "query":"id=2",
+  //         "age":25,
+  //     }
+  // ]
 
-  // axios.all(requestArray).then(() => {
-  //   axios
-  //     .get(
-  //       `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/March2021`
-  //     )
-  //     .then((response) => {
-  //       console.log("this fired", response.data);
-  //       setSheetsData(response.data);
-  //     });
-  //   setIsLoading(false);
-  // 
-  }
-  //);
   const DropdownExampleDropdown = () => (
     <Dropdown
       fluid
@@ -127,7 +137,7 @@ const Dashboard = (sheetsData) => {
           Submit Changes
         </Button>
         <Header id="endingborder" as="h3">
-          Net Ending Portfolio Value for the Month: { }
+          Net Ending Portfolio Value for the Month: {}
         </Header>
       </div>
     </>
@@ -186,15 +196,15 @@ function BuddysWorld({ client }) {
           ) : (
             Number(newDeposit) + Number(client.Deposit) + " "
           )}
-          <button class="negative ui button" onClick={depositHandler}>
+          <button className="negative ui button" onClick={depositHandler}>
             {depositEditing ? "Confirm" : "Edit"}
           </button>
         </Table.Cell>
         <Table.Cell>
-          £ {Number(client.NewNetBalance).toFixed(2) -
+          £{" "}
+          {Number(client.NewNetBalance).toFixed(2) -
             Number(newWithdrawal) +
             Number(newDeposit)}
-          
         </Table.Cell>
       </Table.Row>
     </React.Fragment>
