@@ -3,26 +3,16 @@ import React, { useState } from "react";
 import { Button, Form, Container, Header, Input } from "semantic-ui-react";
 import axios from "axios";
 
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-const dateHolder = new Date();
+//Change to bring in constants
+
+import {nextMonth} from "../consts/constants";
 
 const AddClient = () => {
   const [clientName, setClientName] = useState("");
   const [startingBalance, setStartingBalance] = useState("");
   const [SureFireFee, setSureFireFee] = useState("");
+  const [monthToAdd, setMonthToAdd] = useState("");
+
 
   const handleSubmitNewClient = (e) => {
     e.preventDefault();
@@ -30,17 +20,18 @@ const AddClient = () => {
     let confirmValues = window.confirm(
       `Please confirm ClientName:${clientName}   Starting Balance:${startingBalance}    Fee:${SureFireFee}`
     );
+    const forID = Date.now();
 
     if (confirmValues) {
-      const forID = Date.now();
-      let nextMonth;
+      
+    //   let nextMonth;
 
-      if (dateHolder.getMonth() === 11) {
-        nextMonth = "January" + dateHolder.getFullYear();
-      } else {
-        nextMonth =
-          monthNames[dateHolder.getMonth() + 1] + dateHolder.getFullYear();
-      }
+    //   if (dateHolder.getMonth() === 11) {
+    //     nextMonth = "January" + dateHolder.getFullYear();
+    //   } else {
+    //     nextMonth =
+    //       monthNames[dateHolder.getMonth() + 1] + dateHolder.getFullYear();
+    //   }
 
       const dataSend = {
         Month: nextMonth,
@@ -73,8 +64,8 @@ const AddClient = () => {
   };
 
   return (
-    <Container fluid className="container">
-      <Header as="h3">Add New Client after Portfolio is balanced</Header>
+    <div className="addClient">
+      <Header as="h3">4. Add New Client after Portfolio is balanced</Header>
       <Form className="form">
         <Form.Field required>
           <label>New Client Name</label>
@@ -102,11 +93,19 @@ const AddClient = () => {
             onChange={(e) => setSureFireFee(e.target.value)}
           />
         </Form.Field>
+        {/* <Form.Field required>  // Add once you make this a drop down with default values being monthsyear together no space
+          <label>Month to Add Client</label>
+          <Input
+            type="string"
+            placeholder="Example April2021"
+            onChange={(e) => setMonthToAdd(e.target.value)}
+          />
+        </Form.Field> */}
         <Button color="blue" type="button" onClick={handleSubmitNewClient}>
           Add New Client
         </Button>
       </Form>
-    </Container>
+      </div>
   );
 };
 

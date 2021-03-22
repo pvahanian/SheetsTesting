@@ -4,8 +4,19 @@
   }
   
   .container{
-    padding:20px
+    padding:20px;
+
   }
+
+  .addClient{
+    margin-left:20px;
+    margin-top:18px;
+    padding:20px;
+    width: 30vw;
+    border: 1px solid black;
+    margin-bottom: 10px;
+  }
+
  #border{
     border:2px solid black;
     width: fit-content;
@@ -35,3 +46,28 @@
   width: 70px;
 }
 
+#boxValues{
+  border: 1px solid black;
+  width: fit-content;
+  padding: 30px;
+  margin-top: -25px;
+}
+
+#container{
+  padding:20px;
+    display: flex;
+}
+
+.step1 {
+  padding: 20px;
+  border: 1px solid black;
+  margin-left:20px;
+  width: 23.5vw;
+  margin-bottom: 18px;
+}
+.steps2to3 {
+  border: 1px solid black;
+  margin-left:20px;
+  width: 23.5vw;
+  padding: 20px;
+}
