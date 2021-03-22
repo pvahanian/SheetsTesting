@@ -3,6 +3,11 @@ import { Button, Form, Container, Header } from "semantic-ui-react";
 import axios from "axios";
 import "../App.css";
 
+
+import {
+  currentMonth,
+} from "../consts/constants";
+
 const PortfolioEditor = (props) => {
   const { sheetsData, setSheetsData } = props;
   const [endingBalance, setEndingBalance] = useState("");
@@ -31,30 +36,50 @@ const PortfolioEditor = (props) => {
     function buddyFunction(){
       let totalProfit = endingBalance - startingValue;
       let clients = sheetsData;
-      let requestArray = []
+      let requestArray = [];
+      let sureFiresCut = 0;
 
       for (let i = 0; i < clients.length; i++) {
         //Calculate regular client
         let clientStartingValue = Number(clients[i].startingBalance);
-        let clientsCut =
-          (clientStartingValue / startingValue) *
-          totalProfit *
-          (1 - Number(clients[i].SureFireFee));
+
+        let clientsCut = (clientStartingValue / startingValue) * totalProfit *(1 - Number(clients[i].SureFireFee))
+        sureFiresCut+= ((clientStartingValue / startingValue) * totalProfit)-clientsCut
+
         let percentGained = clientsCut / clientStartingValue;
         clientsCut += clientStartingValue;
-        requestArray.push(axios.patch(`https://sheetdb.io/api/v1/gukfsbnzqayil/Id/${clients[i].Id}`,{"data":{"NewNetBalance":clientsCut,"PercentageGain":percentGained}}))
+        console.log("Clients ID", clients[i].Id)
+        requestArray.push(axios.patch(`https://sheetdb.io/api/v1/gukfsbnzqayil/Id/${clients[i].Id}`,
+        {"data":{"NewNetBalance":clientsCut,"PercentageGain":percentGained}}))
+        console.log(sureFiresCut)
       }
       axios.all(requestArray).then(()=>{
-        axios.get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/March2021`)
-          .then((response)=>{
-            console.log('this fired', response.data)
-            setSheetsData(response.data)
-        })
-        setIsLoading(false)
-
+        axios.get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}?search={"Id":"0"}`)
+        .then(res=>{
+          sureFiresCut+=Number(res.data[0].NewNetBalance)
+          axios.put(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,{
+              condition: { Id: "0" },
+              set: {
+                NewNetBalance:sureFiresCut,
+              },
+            }
+          )
+         })
+        // .then(
+        // axios.get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`)
+        //   .then((response)=>{
+        //     console.log('this fired', response.data)
+        //     setSheetsData(response.data)
+        // }))
       })
+    setIsLoading(false)
     };
+ 
+    //
   }
+
+
+
   return (
       <div>
         <Container fluid>
