@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Button, Form, Container, Header, Input } from "semantic-ui-react";
+import { Button, Form, Header, Input } from "semantic-ui-react";
 import axios from "axios";
 
 //Change to bring in constants
@@ -11,7 +11,7 @@ const AddClient = () => {
   const [clientName, setClientName] = useState("");
   const [startingBalance, setStartingBalance] = useState("");
   const [SureFireFee, setSureFireFee] = useState("");
-  const [monthToAdd, setMonthToAdd] = useState("");
+  // const [monthToAdd, setMonthToAdd] = useState("");
 
 
   const handleSubmitNewClient = (e) => {
@@ -23,15 +23,6 @@ const AddClient = () => {
     const forID = Date.now();
 
     if (confirmValues) {
-      
-    //   let nextMonth;
-
-    //   if (dateHolder.getMonth() === 11) {
-    //     nextMonth = "January" + dateHolder.getFullYear();
-    //   } else {
-    //     nextMonth =
-    //       monthNames[dateHolder.getMonth() + 1] + dateHolder.getFullYear();
-    //   }
 
       const dataSend = {
         Month: nextMonth,
@@ -48,8 +39,7 @@ const AddClient = () => {
           data: dataSend,
         })
         .then((data) => {
-          // The response comes here
-          // console.log(data,"this is data");
+         
           Array.from(document.querySelectorAll("input")).forEach(
             (input) => (input.value = "")
           );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Container, Header } from "semantic-ui-react";
+import { Button, Form, Header } from "semantic-ui-react";
 import axios from "axios";
 import "../App.css";
 
@@ -134,7 +134,7 @@ const PortfolioEditor = (props) => {
     }
   };
 
-  const handleSubmitValues = (event, getData) => {
+  const handleSubmitValues = (getData) => {
     //Pull Data from Dom Once values are submitted NEEDS TO BE REFACTORED TO ANOTHER COMPONENT
     let confirmSubmit = window.confirm(
       `Please confirm you want to submit ${currentMonth}'s values?`
@@ -151,6 +151,9 @@ const PortfolioEditor = (props) => {
 
       for (let i = 1; i < wholeTable[0].rows.length; i++) {
         let row = wholeTable[0].rows[i];
+        const enrollmentDate= row.children[0].innerText
+        const clientNameHolder = row.children[1].innerText;
+        const fee = row.children[3].innerText;
         let withDrawalHolder = Number(row.children[6].innerText.split(" ")[0]);
         let depositHolder = Number(row.children[7].innerText.split(" ")[0]);
         let finalClientValue = Number(row.children[8].innerText.split(" ")[1]);
@@ -172,6 +175,23 @@ const PortfolioEditor = (props) => {
           )
           .then((response) => {
             console.log("this fired", response.data);
+            console.log("this is what were passing in", clientIDHolder,clientNameHolder,finalClientValue,fee)
+
+            //this is what were passing in 1 Harry Kane 1666.67 
+
+            axios.post(
+              `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
+              [
+                {
+                  Month:nextMonth,
+                  EnrollmentDate:enrollmentDate,
+                  Id: clientIDHolder,
+                  clientName: clientNameHolder,
+                  startingBalance: finalClientValue,
+                  SureFireFee: fee,
+                }
+              ]
+            );
           });
       }
       getData();
@@ -219,30 +239,30 @@ const PortfolioEditor = (props) => {
         </div>
       </div>
       <div className="step1">
-          <Header as="h3">1. Update Portfolio</Header>
-          <Form className="form">
-            <Form.Field>
-              <label>Portfolio Ending Value</label>
-              <input
-                className="portInput"
-                placeholder="Portfolio Ending Value"
-                onChange={(e) => setEndingBalance(e.target.value)}
-              />
-            </Form.Field>
-            {!isLoading ? (
-              <Button
-                color="blue"
-                type="button"
-                onClick={handleSubmitPortfolioValue}
-              >
-                Update Portfolio Value
-              </Button>
-            ) : (
-              <Button loading primary></Button>
-            )}
-          </Form>
-        </div>
-        <div className="steps2to3">
+        <Header as="h3">1. Update Portfolio</Header>
+        <Form className="form">
+          <Form.Field>
+            <label>Portfolio Ending Value</label>
+            <input
+              className="portInput"
+              placeholder="Portfolio Ending Value"
+              onChange={(e) => setEndingBalance(e.target.value)}
+            />
+          </Form.Field>
+          {!isLoading ? (
+            <Button
+              color="blue"
+              type="button"
+              onClick={handleSubmitPortfolioValue}
+            >
+              Update Portfolio Value
+            </Button>
+          ) : (
+            <Button loading primary></Button>
+          )}
+        </Form>
+      </div>
+      <div className="steps2to3">
         <h3>2. Update Withdrawals/Deposits and Confirm</h3>
         <h3>3. Submit Values for the Month</h3>
         <div>
@@ -250,13 +270,13 @@ const PortfolioEditor = (props) => {
             color="blue"
             className="submitbutton"
             onClick={(e) => {
-              handleSubmitValues(e, getData);
+              handleSubmitValues(getData);
             }}
           >
             Submit Ending Values
           </Button>
         </div>
-        </div>
+      </div>
     </>
   );
 };
