@@ -15,14 +15,15 @@ const monthNames = [
 ];
 
 export const dateHolder = new Date();
+export const currentYear = dateHolder.getFullYear()
 export const currentMonth =
   monthNames[dateHolder.getMonth()] + dateHolder.getFullYear();
 let holder;
 
 if (dateHolder.getMonth() !== 11) {
-  holder = monthNames[Number(dateHolder.getMonth() + 1)] + dateHolder.getFullYear();
-} 
-else {
+  holder =
+    monthNames[Number(dateHolder.getMonth() + 1)] + dateHolder.getFullYear();
+} else {
   holder = monthNames[0] + Number(dateHolder.getFullYear() + 1);
 }
 

@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div>
-      <DashBoard sheetsData={sheetsData} />
+      <DashBoard sheetsData={sheetsData} setSheetsData={setSheetsData} />
       <PortfolioEditor sheetsData={sheetsData} setSheetsData={setSheetsData} />
       <AddClient />
      

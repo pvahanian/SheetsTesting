@@ -1,27 +1,40 @@
-import React from "react";
+import React,{useState} from "react";
 import useTableInput from "./hooks/useTableInput";
-
-import {
-  monthsDropdownData,
-  defaultDropDownMonth,
-
-} from "../consts/constants";
-
-import { Table, Dropdown  } from "semantic-ui-react";
-
-const Dashboard = (sheetsData) => {
-
-  const handleDropdown = (event, data) => {
-  };
+import axios from "axios";
 
 
-  const DropdownExampleDropdown = () => (
-    <Dropdown
+import { monthsDropdownData,defaultDropDownMonth,currentMonth,currentYear} from "../consts/constants";
+
+import { Table, Dropdown,Select } from "semantic-ui-react";
+
+const Dashboard = (props) => {
+  const { sheetsData, setSheetsData } = props;
+  const [dropDownHolder,setDropDownHolder] = useState(currentMonth)
+
+
+  const handleDropdown = e => {
+    let selectedMonth = e+currentYear
+    if(selectedMonth==="May2021"){
+      selectedMonth="May 2021"
+    }
+    setDropDownHolder(selectedMonth)
+    const getData = () => {
+      axios
+        .get(`https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${selectedMonth}`)
+        .then((response) => {
+          setSheetsData(response.data);
+        });
+    };
+    getData();
+  }
+
+  const MonthDropDown = () => (
+    <Select
       fluid
       selection
       options={monthsDropdownData}
-      onChange={handleDropdown}
-      defaultValue={defaultDropDownMonth.value}
+      onChange={(e)=>handleDropdown(e.target.innerText)}
+      defaultValue={dropDownHolder}
     />
   );
 
@@ -30,7 +43,7 @@ const Dashboard = (sheetsData) => {
       <Table striped className="testforDommy">
         <Table.Header>
           <Table.Row>
-            <DropdownExampleDropdown />
+            <MonthDropDown />
             <Table.HeaderCell>
               <h3>Client Name</h3>
             </Table.HeaderCell>
@@ -59,7 +72,7 @@ const Dashboard = (sheetsData) => {
         </Table.Header>
         <Table.Body>
           {sheetsData ? (
-            sheetsData.sheetsData.map((client) => {
+            sheetsData.map((client) => {
               return <BuddysWorld client={client} />;
             })
           ) : (

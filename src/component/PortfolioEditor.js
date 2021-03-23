@@ -174,11 +174,6 @@ const PortfolioEditor = (props) => {
             }
           )
           .then((response) => {
-            console.log("this fired", response.data);
-            console.log("this is what were passing in", clientIDHolder,clientNameHolder,finalClientValue,fee)
-
-            //this is what were passing in 1 Harry Kane 1666.67 
-
             axios.post(
               `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
               [
