@@ -9,7 +9,7 @@ const PrivateRoute = () => {
 
 function submitHandler(e) {
     console.log(password, userName);
-    if (userName === "H" && password === "S") {
+    if (userName === "SureFire" && password === "HarrysHedgefund") {
       localStorage.setItem('login', true);
       history.push("/home");
     }
@@ -34,6 +34,7 @@ if(localStorage.getItem('login')!="true")
         <Form.Field>
           <label>Password</label>
           <input
+          type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
