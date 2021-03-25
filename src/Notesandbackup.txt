@@ -319,3 +319,20 @@
     // Creates Muliple objects to send to an Axios All requst to push to next months values.
 
     //  `https://sheetdb.io/api/v1/gukfsbnzqayil?sheet=${nextMonth}/Id/${clientIDHolder}`,
+
+    const PrivateRoute = ({ component: Component, ...rest }) = {
+
+   <R
+{...rest}
+render={props =>
+  localStorage.getItem('token') ?
+(
+<Component {...props} />
+):
+(
+<RD to='/' />
+)
+  }
+[/](file:///)>
+   );
+  export default PrivateRoute;

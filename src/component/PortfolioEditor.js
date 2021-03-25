@@ -148,6 +148,7 @@ const PortfolioEditor = (props) => {
 
       const timeStamp = new Date(Date.now()).toDateString();
       let wholeTable = document.getElementsByClassName("testforDommy");
+      
 
       for (let i = 1; i < wholeTable[0].rows.length; i++) {
         let row = wholeTable[0].rows[i];
@@ -223,13 +224,13 @@ const PortfolioEditor = (props) => {
       <div id="container">
         <div id="boxValues">
           <h3 id="border">
-            Starting Portfolio Value for the Month: £{startingValue}
+            Starting Portfolio Value for the Month: ${startingValue}
           </h3>
           <h3 id="border">
-            Gross Ending Portfolio Value for the Month: £{endingBalance}
+            Gross Ending Portfolio Value for the Month: ${endingBalance}
           </h3>
           <h3 id="endingborder">
-            Net Ending Portfolio Value for the Month: £ {endingMonthValue}
+            Net Ending Portfolio Value for the Month: $ {endingMonthValue}
           </h3>
         </div>
       </div>
@@ -260,7 +261,7 @@ const PortfolioEditor = (props) => {
       <div className="steps2to3">
         <h3>2. Update Withdrawals/Deposits and Confirm</h3>
         <h3>3. Submit Values for the Month</h3>
-        <div>
+        <div id="sumbitButtonCenter">
           <Button
             color="blue"
             className="submitbutton"

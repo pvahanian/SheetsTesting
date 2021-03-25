@@ -108,9 +108,9 @@ function BuddysWorld({ client }) {
         <Table.Cell>
           <h4>{client.clientName}</h4>
         </Table.Cell>
-        <Table.Cell>£ {Number(client.startingBalance).toFixed(2)} </Table.Cell>
+        <Table.Cell>$ {Number(client.startingBalance).toFixed(2)} </Table.Cell>
         <Table.Cell>{client.SureFireFee} </Table.Cell>
-        <Table.Cell>£ {Number(client.NewNetBalance).toFixed(2)} </Table.Cell>
+        <Table.Cell>$ {Number(client.NewNetBalance).toFixed(2)} </Table.Cell>
         <Table.Cell>{client.PercentageGain} </Table.Cell>
         <Table.Cell>
           {withdrawalEditing ? (
@@ -144,7 +144,7 @@ function BuddysWorld({ client }) {
           </button>
         </Table.Cell>
         <Table.Cell>
-          £{" "}
+          ${" "}
           {Number(client.NewNetBalance).toFixed(2) -
             Number(newWithdrawal) +
             Number(newDeposit)}

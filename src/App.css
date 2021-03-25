@@ -12,7 +12,7 @@
     margin-left:20px;
     margin-top:18px;
     padding:20px;
-    width: 45vw;
+    width: 23.5vw;
     border: 1px solid black;
     margin-bottom: 10px;
   }
@@ -70,4 +70,25 @@
   margin-left:20px;
   width: 23.5vw;
   padding: 20px;
+}
+#Login{
+ 
+}
+
+#appDisplay{
+  display: block;
+}
+.ui.form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+#sumbitButtonCenter{
+  display: flex;
+  justify-content: center;
+}
+#error{
+  display: none;
+  color: red
 }
