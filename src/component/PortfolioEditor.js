@@ -27,7 +27,6 @@ const PortfolioEditor = (props) => {
         }
       )
       .then((response) => {
-        console.log(response);
       });
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -106,7 +105,7 @@ const PortfolioEditor = (props) => {
           let clientStartingValue = Number(clients[i].startingBalance); // Gets their starting balance for the month
           let clientsCut =
             (clientStartingValue / startingValue) * atALossBalance; // Sees how much of the portfolio they are entitled too
-          let percentageLoss = (clientsCut / clientStartingValue) * -1; //Calculates the negative value of the loss in %
+          let percentageLoss = (1- clientsCut/clientStartingValue) * -1; //Calculates the negative value of the loss in %
           requestArray.push(
             axios.put(
               `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
@@ -148,7 +147,9 @@ const PortfolioEditor = (props) => {
 
       const timeStamp = new Date(Date.now()).toDateString();
       let wholeTable = document.getElementsByClassName("testforDommy");
-      
+      let postArray= []
+      let dataSent = false
+
 
       for (let i = 1; i < wholeTable[0].rows.length; i++) {
         let row = wholeTable[0].rows[i];
@@ -157,7 +158,7 @@ const PortfolioEditor = (props) => {
         const fee = row.children[3].innerText;
         let withDrawalHolder = Number(row.children[6].innerText.split(" ")[0]);
         let depositHolder = Number(row.children[7].innerText.split(" ")[0]);
-        let finalClientValue = Number(row.children[8].innerText.split(" ")[1]);
+        let finalClientValue = Math.round(Number(row.children[8].innerText.split(" ")[1])*100)/100;
         let clientIDHolder = row.className;
 
         portfolioSum += finalClientValue;
@@ -174,22 +175,75 @@ const PortfolioEditor = (props) => {
               },
             }
           )
+          
           .then((response) => {
-            axios.post(
-              `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
-              [
-                {
-                  Month:nextMonth,
-                  EnrollmentDate:enrollmentDate,
-                  Id: clientIDHolder,
-                  clientName: clientNameHolder,
-                  startingBalance: finalClientValue,
-                  SureFireFee: fee,
-                }
-              ]
-            );
+          if(postArray.length<1){
+              console.log(postArray.length)
+              postArray.push(
+                  {
+                    Month:nextMonth,
+                    EnrollmentDate:enrollmentDate,
+                    Id: clientIDHolder,
+                    clientName: clientNameHolder,
+                    startingBalance: finalClientValue,
+                    SureFireFee: fee,
+                  }
+                
+              )
+          }
+          else{
+          if(postArray[postArray.length-1].Id<clientIDHolder){
+            console.log(postArray.length)
+            postArray.push(
+                  {
+                    Month:nextMonth,
+                    EnrollmentDate:enrollmentDate,
+                    Id: clientIDHolder,
+                    clientName: clientNameHolder,
+                    startingBalance: finalClientValue,
+                    SureFireFee: fee,
+                  }
+                
+              )
+            
+          }
+          else{
+            console.log(postArray.length)
+            postArray.unshift(
+                  {
+                    Month:nextMonth,
+                    EnrollmentDate:enrollmentDate,
+                    Id: clientIDHolder,
+                    clientName: clientNameHolder,
+                    startingBalance: finalClientValue,
+                    SureFireFee: fee,
+                  }
+                
+              ) 
+           }
+          }
+          // axios.post(
+          //     `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
+          //     [
+          //       {
+          //         Month:nextMonth,
+          //         EnrollmentDate:enrollmentDate,
+          //         Id: clientIDHolder,
+          //         clientName: clientNameHolder,
+          //         startingBalance: finalClientValue,
+          //         SureFireFee: fee,
+          //       }
+          //     ]
+          //   );
           });
       }
+     
+      if(postArray.length>=wholeTable[0].rows.length-1){
+        for(let index=0; index<postArray.length; index ++){
+          console.log(postArray[index],"index",index)
+        }
+      }
+     
       getData();
       setEndingMonthValue(portfolioSum);
     }
@@ -230,7 +284,7 @@ const PortfolioEditor = (props) => {
             Gross Ending Portfolio Value for the Month: ${endingBalance}
           </h3>
           <h3 id="endingborder">
-            Net Ending Portfolio Value for the Month: $ {endingMonthValue}
+            Net Ending Portfolio Value for the Month: $ {Number(endingMonthValue).toFixed(2)}
           </h3>
         </div>
       </div>

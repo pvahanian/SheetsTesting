@@ -336,3 +336,30 @@ render={props =>
 [/](file:///)>
    );
   export default PrivateRoute;
+   axios.post(
+              `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
+              [
+                {
+                  Month:nextMonth,
+                  EnrollmentDate:enrollmentDate,
+                  Id: clientIDHolder,
+                  clientName: clientNameHolder,
+                  startingBalance: finalClientValue,
+                  SureFireFee: fee,
+                }
+              ]
+            );
+          });
+
+            // console.log(sortedSheet[0])
+          // for (let i=1; i<unSortedSheet.length; i++){
+          //   // console.log(Number(sortedSheet[i-1].Id), "  VS  ", Number(unSortedSheet[i].Id))
+          //   if(Number(sortedSheet[i-1].Id)<Number(unSortedSheet[i].Id)){
+          //      console.log(Number(sortedSheet[i-1].Id), "  VS  ", Number(unSortedSheet[i].Id),"<Pushing to end")
+          //     sortedSheet.push(unSortedSheet[i])
+          //   }
+          //   if(Number(sortedSheet[i-1].Id)>Number(unSortedSheet[i].Id)){
+          //          console.log(Number(sortedSheet[i-1].Id), "  VS  ", Number(unSortedSheet[i].Id)," <Pushing to Start")
+          //     sortedSheet.unshift(unSortedSheet[i])
+          //   }
+          // }

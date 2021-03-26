@@ -22,9 +22,13 @@ function App() {
           `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`
         )
         .then((response) => {
-          setSheetsData(response.data);
-        });
-    };
+          let unSortedSheet = response.data
+          unSortedSheet.sort((a, b) => {
+            return a.Id - b.Id;
+          });
+          setSheetsData(unSortedSheet)
+        })    
+    }
     getData();
   }, []);
 
