@@ -177,64 +177,19 @@ const PortfolioEditor = (props) => {
           )
           
           .then((response) => {
-          if(postArray.length<1){
-              console.log(postArray.length)
-              postArray.push(
-                  {
-                    Month:nextMonth,
-                    EnrollmentDate:enrollmentDate,
-                    Id: clientIDHolder,
-                    clientName: clientNameHolder,
-                    startingBalance: finalClientValue,
-                    SureFireFee: fee,
-                  }
-                
-              )
-          }
-          else{
-          if(postArray[postArray.length-1].Id<clientIDHolder){
-            console.log(postArray.length)
-            postArray.push(
-                  {
-                    Month:nextMonth,
-                    EnrollmentDate:enrollmentDate,
-                    Id: clientIDHolder,
-                    clientName: clientNameHolder,
-                    startingBalance: finalClientValue,
-                    SureFireFee: fee,
-                  }
-                
-              )
-            
-          }
-          else{
-            console.log(postArray.length)
-            postArray.unshift(
-                  {
-                    Month:nextMonth,
-                    EnrollmentDate:enrollmentDate,
-                    Id: clientIDHolder,
-                    clientName: clientNameHolder,
-                    startingBalance: finalClientValue,
-                    SureFireFee: fee,
-                  }
-                
-              ) 
-           }
-          }
-          // axios.post(
-          //     `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
-          //     [
-          //       {
-          //         Month:nextMonth,
-          //         EnrollmentDate:enrollmentDate,
-          //         Id: clientIDHolder,
-          //         clientName: clientNameHolder,
-          //         startingBalance: finalClientValue,
-          //         SureFireFee: fee,
-          //       }
-          //     ]
-          //   );
+           axios.post(
+              `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
+              [
+                {
+                  Month:nextMonth,
+                  EnrollmentDate:enrollmentDate,
+                  Id: clientIDHolder,
+                  clientName: clientNameHolder,
+                  startingBalance: finalClientValue,
+                  SureFireFee: fee,
+                }
+              ]
+            );
           });
       }
      
