@@ -13,7 +13,7 @@ const Dashboard = (props) => {
 
 
   const handleDropdown = e => {
-    let selectedMonth = e+currentYear
+    let selectedMonth = e+" "+currentYear
     if(selectedMonth==="May2021"){
       selectedMonth="May 2021"
     }
