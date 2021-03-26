@@ -5,14 +5,13 @@ import axios from "axios";
 
 //Change to bring in constants
 
-import {nextMonth} from "../consts/constants";
+import { nextMonth } from "../consts/constants";
 
 const AddClient = () => {
   const [clientName, setClientName] = useState("");
   const [startingBalance, setStartingBalance] = useState("");
   const [SureFireFee, setSureFireFee] = useState("");
   // const [monthToAdd, setMonthToAdd] = useState("");
-
 
   const handleSubmitNewClient = (e) => {
     e.preventDefault();
@@ -23,23 +22,39 @@ const AddClient = () => {
     const forID = Date.now();
 
     if (confirmValues) {
+      const dataSend = [
+        {
+          Month: nextMonth,
+          clientName,
+          startingBalance,
+          SureFireFee,
+          Id: forID,
+          EnrollmentDate: new Date(forID).toDateString(),
+        },
+      ];
 
-      const dataSend = {
-        Month: nextMonth,
-        clientName,
-        startingBalance,
-        SureFireFee,
-        Id: forID,
-        EnrollmentDate: new Date(forID).toDateString(),
-      };
+      console.log(
+        dataSend,
+        "data were sending",
+        "Next Month value ",
+        nextMonth
+      );
 
-      console.log(dataSend, "data were sending", "Next Month value ", nextMonth)
       axios
-        .post(`https://sheetdb.io/api/v1/gukfsbnzqayil?sheet=${nextMonth}`, {
-          data: dataSend,
-        })
+        .post(
+          `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
+          [
+            {
+              "Month": nextMonth,
+              "clientName": clientName,
+              "SureFireFee":SureFireFee,
+              "Id": forID,
+              "startingBalance": startingBalance,
+              "EnrollmentDate": new Date(forID).toDateString(),
+            },
+          ]
+        )
         .then((data) => {
-         
           Array.from(document.querySelectorAll("input")).forEach(
             (input) => (input.value = "")
           );
@@ -95,7 +110,7 @@ const AddClient = () => {
           Add New Client
         </Button>
       </Form>
-      </div>
+    </div>
   );
 };
 

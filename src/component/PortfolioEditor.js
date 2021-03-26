@@ -103,9 +103,8 @@ const PortfolioEditor = (props) => {
           // Go through each client
           //Calculate regular client
           let clientStartingValue = Number(clients[i].startingBalance); // Gets their starting balance for the month
-          let clientsCut =
-            (clientStartingValue / startingValue) * atALossBalance; // Sees how much of the portfolio they are entitled too
-          let percentageLoss = (1- clientsCut/clientStartingValue) * -1; //Calculates the negative value of the loss in %
+          let clientsCut =(clientStartingValue / startingValue) * atALossBalance; // Sees how much of the portfolio they are entitled too
+          let percentageLoss = (1 - clientsCut/clientStartingValue) * -1; //Calculates the negative value of the loss in %
           requestArray.push(
             axios.put(
               `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
