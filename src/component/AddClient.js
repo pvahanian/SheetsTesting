@@ -42,7 +42,7 @@ const AddClient = () => {
 
       axios
         .post(
-          `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
+          `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${nextMonth}`,
           [
             {
               "Month": nextMonth,

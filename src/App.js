@@ -19,8 +19,7 @@ function App() {
     const getData = () => {
       axios
         .get(
-          `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`
-        )
+          `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}`)
         .then((response) => {
           let unSortedSheet = response.data
           unSortedSheet.sort((a, b) => {

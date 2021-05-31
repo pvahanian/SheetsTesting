@@ -18,7 +18,7 @@ const PortfolioEditor = (props) => {
     setIsLoading(true);
     axios
       .put(
-        `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
+        `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}`,
         {
           condition: { Id: "0" },
           set: {
@@ -58,7 +58,7 @@ const PortfolioEditor = (props) => {
           clientsCut += clientStartingValue;
           requestArray.push(
             axios.put(
-              `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
+              `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}`,
               {
                 condition: { Id: clients[i].Id },
                 set: {
@@ -72,13 +72,13 @@ const PortfolioEditor = (props) => {
         axios.all(requestArray).then(() => {
           axios
             .get(
-              `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}?search={"Id":"0"}`
+              `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}?search={"Id":"0"}`
             )
             .then((res) => {
               sureFiresCut += Number(res.data[0].NewNetBalance);
               axios
                 .put(
-                  `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
+                  `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}`,
                   {
                     condition: { Id: "0" },
                     set: {
@@ -89,7 +89,7 @@ const PortfolioEditor = (props) => {
                 .then((need) => {
                   axios
                     .get(
-                      `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`
+                      `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}`
                     )
                     .then((response) => {
                       setSheetsData(response.data);
@@ -107,7 +107,7 @@ const PortfolioEditor = (props) => {
           let percentageLoss = (1 - clientsCut/clientStartingValue) * -1; //Calculates the negative value of the loss in %
           requestArray.push(
             axios.put(
-              `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
+              `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}`,
               {
                 condition: { Id: clients[i].Id },
                 set: {
@@ -121,7 +121,7 @@ const PortfolioEditor = (props) => {
         axios.all(requestArray).then(() => {
           axios
             .get(
-              `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`
+              `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}`
             )
             .then((response) => {
               setSheetsData(response.data);
@@ -163,7 +163,7 @@ const PortfolioEditor = (props) => {
         portfolioSum += finalClientValue;
         axios
           .put(
-            `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`,
+            `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}`,
             {
               condition: { Id: clientIDHolder },
               set: {
@@ -177,7 +177,7 @@ const PortfolioEditor = (props) => {
           
           .then((response) => {
            axios.post(
-              `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${nextMonth}`,
+              `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${nextMonth}`,
               [
                 {
                   Month:nextMonth,
@@ -207,7 +207,7 @@ const PortfolioEditor = (props) => {
     let newSheetStuff = [];
     axios
       .get(
-        `https://api.steinhq.com/v1/storages/60514b53f62b6004b3eb6770/${currentMonth}`
+        `https://api.steinhq.com/v1/storages/60b53b5ed2a8585c5af2817f/${currentMonth}`
       )
       .then((response) => {
         // setNextMonthSheet(response.data);
