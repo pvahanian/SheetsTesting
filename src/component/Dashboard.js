@@ -54,28 +54,28 @@ const Dashboard = (props) => {
         <Table.Header>
           <Table.Row>
             <MonthDropDown />
-            <Table.HeaderCell>
+            <Table.HeaderCell width={2}>
               <h3>Client Name</h3>
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={2}>
               <h3>Starting Monthly Balance</h3>
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={1}>
               <h3>Sure Fire Fee</h3>
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={2}>
               <h3>New Net Balance</h3>
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={1}>
               <h3>Percentage Gain</h3>
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={2}>
               <h3>Withdrawal</h3>
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={2}>
               <h3>Deposit</h3>
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={2}>
               <h3>Next Months Balance</h3>
             </Table.HeaderCell>
           </Table.Row>
