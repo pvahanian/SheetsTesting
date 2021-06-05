@@ -147,8 +147,6 @@ const PortfolioEditor = (props) => {
       const timeStamp = new Date(Date.now()).toDateString();
       let wholeTable = document.getElementsByClassName("testforDommy");
       let postArray= []
-      let dataSent = false
-
 
       for (let i = 1; i < wholeTable[0].rows.length; i++) {
         let row = wholeTable[0].rows[i];

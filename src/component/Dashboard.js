@@ -3,9 +3,9 @@ import useTableInput from "./hooks/useTableInput";
 import axios from "axios";
 
 
-import { monthsDropdownData,defaultDropDownMonth,currentMonth,currentYear} from "../consts/constants";
+import { monthsDropdownData,currentMonth,currentYear} from "../consts/constants";
 
-import { Table, Dropdown,Select } from "semantic-ui-react";
+import { Table, Select } from "semantic-ui-react";
 
 const Dashboard = (props) => {
   const { sheetsData, setSheetsData } = props;

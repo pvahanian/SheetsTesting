@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
-import App from './App.js'
+
 const PrivateRoute = () => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
